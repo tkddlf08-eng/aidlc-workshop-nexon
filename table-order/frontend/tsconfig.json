@@ -17,7 +17,10 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@customer/*": ["./src/customer/*"],
+      "@admin/*": ["./src/admin/*"],
+      "@shared/*": ["./src/shared/*"]
     }
   },
   "include": ["src"],

@@ -30,4 +30,5 @@ apiClient.interceptors.response.use(
   }
 );
 
+export { apiClient };
 export default apiClient;

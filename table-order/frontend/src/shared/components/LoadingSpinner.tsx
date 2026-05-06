@@ -11,7 +11,7 @@ const sizeStyles = {
   lg: 'h-12 w-12',
 };
 
-export default function LoadingSpinner({ size = 'md', className = '' }: LoadingSpinnerProps) {
+export function LoadingSpinner({ size = 'md', className = '' }: LoadingSpinnerProps) {
   return (
     <div className={`flex items-center justify-center ${className}`} role="status">
       <Loader2 className={`animate-spin text-primary ${sizeStyles[size]}`} />
@@ -19,3 +19,5 @@ export default function LoadingSpinner({ size = 'md', className = '' }: LoadingS
     </div>
   );
 }
+
+export default LoadingSpinner;

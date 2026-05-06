@@ -7,6 +7,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@customer': path.resolve(__dirname, './src/customer'),
+      '@admin': path.resolve(__dirname, './src/admin'),
+      '@shared': path.resolve(__dirname, './src/shared'),
     },
   },
   server: {
@@ -24,7 +27,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
-          state: ['zustand'],
+          state: ['zustand', '@tanstack/react-query'],
           ui: ['@dnd-kit/core', '@dnd-kit/sortable', 'lucide-react'],
         },
       },
