@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-05-06T00:00:00Z
-- **Current Stage**: CONSTRUCTION - Functional Design (Unit 3: Admin Frontend)
+- **Current Stage**: CONSTRUCTION - NFR Requirements (Unit 3: Admin Frontend)
 
 ## Workspace State
 - **Existing Code**: No
