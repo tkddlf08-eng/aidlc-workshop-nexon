@@ -26,7 +26,7 @@ export const useAdminAuthStore = create<AdminAuthState>((set, get) => ({
   login: async (credentials: LoginRequest) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await apiClient.post<LoginResponse>('/auth/admin/login', credentials);
+      const response = await apiClient.post<LoginResponse>('/api/auth/admin/login', credentials);
       const { token, expiresAt, admin } = response.data;
 
       tokenStorage.set(token, expiresAt);
@@ -63,7 +63,7 @@ export const useAdminAuthStore = create<AdminAuthState>((set, get) => ({
 
     set({ isLoading: true });
     try {
-      const response = await apiClient.get<AdminInfo>('/auth/me');
+      const response = await apiClient.get<AdminInfo>('/api/auth/me');
       set({ admin: response.data, isLoading: false });
 
       // 자동 로그아웃 타이머 설정

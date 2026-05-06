@@ -28,29 +28,29 @@ export const useMenuStore = create<MenuState>((set, get) => ({
   isLoading: false,
 
   loadCategories: async () => {
-    const response = await apiClient.get<Category[]>('/categories');
+    const response = await apiClient.get<Category[]>('/api/categories');
     set({ categories: response.data });
   },
 
   loadMenus: async (categoryId?: string) => {
     set({ isLoading: true });
     const params = categoryId ? { category_id: categoryId } : {};
-    const response = await apiClient.get<Menu[]>('/menus', { params });
+    const response = await apiClient.get<Menu[]>('/api/menus', { params });
     set({ menus: response.data, isLoading: false });
   },
 
   createCategory: async (data: CategoryFormData) => {
-    await apiClient.post('/categories', data);
+    await apiClient.post('/api/categories', data);
     await get().loadCategories();
   },
 
   updateCategory: async (id: string, data: CategoryFormData) => {
-    await apiClient.put(`/categories/${id}`, data);
+    await apiClient.put(`/api/categories/${id}`, data);
     await get().loadCategories();
   },
 
   deleteCategory: async (id: string) => {
-    await apiClient.delete(`/categories/${id}`);
+    await apiClient.delete(`/api/categories/${id}`);
     await get().loadCategories();
     if (get().selectedCategoryId === id) {
       set({ selectedCategoryId: null, menus: [] });
@@ -65,7 +65,7 @@ export const useMenuStore = create<MenuState>((set, get) => ({
     if (data.description) formData.append('description', data.description);
     if (data.image) formData.append('image', data.image);
 
-    await apiClient.post('/menus', formData, {
+    await apiClient.post('/api/menus', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
       timeout: 30000,
     });
@@ -81,7 +81,7 @@ export const useMenuStore = create<MenuState>((set, get) => ({
     if (data.description) formData.append('description', data.description);
     if (data.image) formData.append('image', data.image);
 
-    await apiClient.put(`/menus/${id}`, formData, {
+    await apiClient.put(`/api/menus/${id}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
       timeout: 30000,
     });
@@ -89,18 +89,18 @@ export const useMenuStore = create<MenuState>((set, get) => ({
   },
 
   deleteMenu: async (id: string) => {
-    await apiClient.delete(`/menus/${id}`);
+    await apiClient.delete(`/api/menus/${id}`);
     await get().loadMenus(get().selectedCategoryId || undefined);
     await get().loadCategories();
   },
 
   reorderCategory: async (id: string, newOrder: number) => {
-    await apiClient.put(`/categories/${id}`, { sortOrder: newOrder });
+    await apiClient.put(`/api/categories/${id}`, { sortOrder: newOrder });
     await get().loadCategories();
   },
 
   reorderMenu: async (id: string, newOrder: number) => {
-    await apiClient.patch(`/menus/${id}/sort`, { sortOrder: newOrder });
+    await apiClient.patch(`/api/menus/${id}/sort`, { sortOrder: newOrder });
     await get().loadMenus(get().selectedCategoryId || undefined);
   },
 

@@ -11,6 +11,6 @@ export const useTableStore = create<TableState>(() => ({
   isLoading: false,
 
   completeTable: async (tableId: string) => {
-    await apiClient.post(`/tables/${tableId}/complete`);
+    await apiClient.post(`/api/tables/${tableId}/complete`);
   },
 }));

@@ -44,7 +44,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   loadDashboard: async () => {
     set({ isLoading: true });
     try {
-      const response = await apiClient.get<{ tables: Table[] }>('/tables/dashboard');
+      const response = await apiClient.get<{ tables: Table[] }>('/api/tables/dashboard');
       set({ tables: response.data.tables, isLoading: false });
     } catch {
       set({ isLoading: false });
@@ -156,7 +156,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     }));
 
     try {
-      await apiClient.patch(`/orders/${orderId}/status`, { status });
+      await apiClient.patch(`/api/orders/${orderId}/status`, { status });
     } catch {
       set({ tables: previousTables });
       throw new Error('상태 변경에 실패했습니다');
@@ -165,7 +165,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
 
   deleteOrder: async (orderId, tableId) => {
     try {
-      await apiClient.delete(`/orders/${orderId}`);
+      await apiClient.delete(`/api/orders/${orderId}`);
       set((state) => ({
         tables: state.tables.map((table) => {
           if (table.id === tableId) {
@@ -183,7 +183,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
 
   selectOrder: async (orderId) => {
     try {
-      const response = await apiClient.get<OrderDetail>(`/orders/${orderId}`);
+      const response = await apiClient.get<OrderDetail>(`/api/orders/${orderId}`);
       set({ selectedOrder: response.data, isDrawerOpen: true });
     } catch {
       throw new Error('주문 상세 조회에 실패했습니다');

@@ -22,7 +22,7 @@ export default function OrderHistoryPage() {
     const fetchHistory = async () => {
       setIsLoading(true);
       try {
-        const response = await apiClient.get<ArchivedOrder[]>('/orders/history', {
+        const response = await apiClient.get<ArchivedOrder[]>('/api/orders/history', {
           params: { table_id: tableId, date_from: dateFrom, date_to: dateTo },
         });
         setOrders(response.data);
