@@ -25,6 +25,7 @@ class OrderRepository:
         )
         self.db.add(order)
         await self.db.flush()
+        await self.db.refresh(order)
         return order
 
     async def create_items(self, items: list[OrderItem]) -> None:
@@ -32,7 +33,9 @@ class OrderRepository:
         await self.db.flush()
 
     async def get_by_id(self, order_id: int) -> Order | None:
-        return await self.db.get(Order, order_id)
+        stmt = select(Order).where(Order.id == order_id)
+        result = await self.db.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def get_items(self, order_id: int) -> list[OrderItem]:
         stmt = select(OrderItem).where(OrderItem.order_id == order_id)

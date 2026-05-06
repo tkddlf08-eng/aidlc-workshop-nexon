@@ -164,6 +164,22 @@ class OrderService:
                 f"{order.status}에서 {data.status}로 변경할 수 없습니다"
             )
 
+        # Get items before update to avoid session issues
+        items = await self.order_repo.get_items(order_id)
+
+        # Capture values before update
+        response = OrderResponse(
+            id=order.id,
+            order_number=order.order_number,
+            table_id=order.table_id,
+            session_id=order.session_id,
+            total_amount=order.total_amount,
+            status=data.status,
+            items=[OrderItemResponse.model_validate(oi) for oi in items],
+            created_at=order.created_at,
+            updated_at=order.updated_at,
+        )
+
         await self.order_repo.update_status(order_id, data.status)
         logger.info(
             "order_status_changed",
@@ -172,19 +188,7 @@ class OrderService:
             new_status=data.status,
         )
 
-        updated = await self.order_repo.get_by_id(order_id)
-        items = await self.order_repo.get_items(order_id)
-        return OrderResponse(
-            id=updated.id,
-            order_number=updated.order_number,
-            table_id=updated.table_id,
-            session_id=updated.session_id,
-            total_amount=updated.total_amount,
-            status=updated.status,
-            items=[OrderItemResponse.model_validate(oi) for oi in items],
-            created_at=updated.created_at,
-            updated_at=updated.updated_at,
-        )
+        return response
 
     async def delete_order(self, order_id: int) -> None:
         """Soft delete an order."""

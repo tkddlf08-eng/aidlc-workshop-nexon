@@ -37,6 +37,7 @@ class CategoryRepository:
         category = Category(store_id=store_id, name=name, sort_order=sort_order)
         self.db.add(category)
         await self.db.flush()
+        await self.db.refresh(category)
         return category
 
     async def update(self, category_id: int, **kwargs) -> None:
@@ -100,6 +101,7 @@ class MenuRepository:
         menu = Menu(**kwargs)
         self.db.add(menu)
         await self.db.flush()
+        await self.db.refresh(menu)
         return menu
 
     async def update(self, menu_id: int, **kwargs) -> None:
