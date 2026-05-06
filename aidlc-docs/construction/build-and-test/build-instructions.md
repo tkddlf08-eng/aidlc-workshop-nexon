@@ -1,3 +1,93 @@
+# Build Instructions - Customer Frontend
+
+## 사전 요구사항
+
+- **Node.js**: 18.x 이상
+- **npm**: 9.x 이상
+
+### Node.js 설치 확인
+```bash
+node --version   # v18.x.x 이상
+npm --version    # 9.x.x 이상
+```
+
+### Node.js 미설치 시
+- Windows: https://nodejs.org/ 에서 LTS 버전 다운로드
+- 또는 nvm-windows 사용: https://github.com/coreybutler/nvm-windows
+
+---
+
+## 빌드 단계
+
+### 1. 의존성 설치
+```bash
+cd frontend
+npm install
+```
+
+### 2. TypeScript 타입 체크
+```bash
+npx tsc --noEmit
+```
+- 에러 없이 완료되어야 함
+- 타입 에러 발생 시 해당 파일 수정 필요
+
+### 3. ESLint 린트 체크
+```bash
+npx eslint src/ --ext .ts,.tsx
+```
+- 경고(warning)는 허용, 에러(error)는 수정 필요
+
+### 4. 프로덕션 빌드
+```bash
+npx vite build
+```
+- `dist/` 디렉토리에 빌드 결과물 생성
+- 번들 사이즈 확인: 500KB (gzipped) 이하 목표
+
+### 5. 빌드 결과 확인
+```bash
+npx vite preview
+```
+- http://localhost:4173 에서 프로덕션 빌드 미리보기
+
+---
+
+## 개발 서버 실행
+
+```bash
+cd frontend
+npm run dev
+```
+- http://localhost:5173 에서 개발 서버 시작
+- MSW Mock이 활성화되어 백엔드 없이 동작
+- Hot Module Replacement (HMR) 지원
+
+---
+
+## 예상 빌드 출력
+
+```
+vite v5.x.x building for production...
+✓ 40 modules transformed.
+dist/index.html                  0.5 kB
+dist/assets/vendor-xxxxx.js      ~150 kB (gzip)
+dist/assets/state-xxxxx.js       ~30 kB (gzip)
+dist/assets/index-xxxxx.js       ~80 kB (gzip)
+dist/assets/index-xxxxx.css      ~20 kB (gzip)
+✓ built in x.xxs
+```
+
+---
+
+## 트러블슈팅
+
+| 문제 | 해결 방법 |
+|------|-----------|
+| `Cannot find module '@shared/...'` | tsconfig.json의 paths 설정 확인, vite.config.ts의 alias 확인 |
+| `Module not found: msw` | `npm install` 재실행 |
+| 포트 5173 사용 중 | `npx vite --port 3000` |
+| Tailwind 스타일 미적용 | `tailwind.config.js`의 content 경로 확인 |
 # Build Instructions - Admin Frontend (Unit 3)
 
 ## Prerequisites

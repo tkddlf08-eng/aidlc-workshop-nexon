@@ -101,28 +101,37 @@ Phase 2: CONSTRUCTION (per-unit)
 - [x] Requirements Analysis (COMPLETED)
 - [x] User Stories (COMPLETED)
 - [x] Workflow Planning (COMPLETED)
-- [ ] Application Design - **EXECUTE**
-  - **Rationale**: 신규 프로젝트로 컴포넌트 구조, 서비스 레이어, API 설계가 필요
-- [ ] Units Generation - **EXECUTE**
-  - **Rationale**: 프론트엔드/백엔드 분리 아키텍처로 최소 2개 유닛 필요, 3명 팀 병렬 작업 지원
+- [x] Application Design (COMPLETED)
+- [x] Units Generation (COMPLETED)
 
 ### 🟢 CONSTRUCTION PHASE (per-unit)
-- [ ] Functional Design - **EXECUTE**
-  - **Rationale**: 데이터 모델, 비즈니스 로직(세션 관리, 주문 상태 흐름) 상세 설계 필요
-- [ ] NFR Requirements - **EXECUTE**
-  - **Rationale**: SSE 실시간 통신, JWT 인증, 성능 요구사항 존재
-- [ ] NFR Design - **EXECUTE**
-  - **Rationale**: NFR Requirements에서 도출된 패턴을 설계에 반영 필요
-- [ ] Infrastructure Design - **EXECUTE**
-  - **Rationale**: AWS 배포 환경, S3 이미지 저장소, DB 인프라 설계 필요
-- [ ] Code Generation - **EXECUTE** (ALWAYS)
-  - **Rationale**: 구현 계획 수립 및 코드 생성
-- [ ] Build and Test - **EXECUTE** (ALWAYS)
-  - **Rationale**: 빌드, 테스트, 검증 지침 생성
+
+#### Unit 2: Customer Frontend ✅ COMPLETED
+- [x] Functional Design (COMPLETED)
+- [x] NFR Requirements (COMPLETED)
+- [x] NFR Design (COMPLETED)
+- [x] Infrastructure Design (COMPLETED)
+- [x] Code Generation (COMPLETED)
+- [x] Build and Test (COMPLETED) — 8/8 테스트 통과, 타입 체크 통과
+
+#### Unit 1: Backend API ⬜ NEXT
+- [ ] Functional Design
+- [ ] NFR Requirements
+- [ ] NFR Design
+- [ ] Infrastructure Design
+- [ ] Code Generation
+- [ ] Build and Test
+
+#### Unit 3: Admin Frontend ⬜ PENDING
+- [ ] Functional Design
+- [ ] NFR Requirements
+- [ ] NFR Design
+- [ ] Infrastructure Design
+- [ ] Code Generation
+- [ ] Build and Test
 
 ### 🟡 OPERATIONS PHASE
 - [ ] Operations - **PLACEHOLDER**
-  - **Rationale**: 향후 배포/모니터링 워크플로우 확장 예정
 
 ---
 
