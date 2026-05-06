@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import apiClient from '@/shared/api/client';
 import { SSEManager } from '@/admin/services/sse-manager';
 import type {
-  Order,
   OrderDetail,
   OrderStatus,
   SSEEventType,
