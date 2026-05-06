@@ -111,3 +111,115 @@
 **Context**: INCEPTION - Units Generation 완료
 
 ---
+
+## CONSTRUCTION - Unit 1 (Backend) 시작 요청
+**Timestamp**: 2026-05-06T01:00:00Z
+**User Input**: "나 Unit 1 (Backend) 맡아서 개발해야돼 . 어떻게 하면 될까 ?"
+**AI Response**: Unit 1 Backend 개발 진행 방법 안내 - CONSTRUCTION 단계 Functional Design부터 시작
+**Context**: CONSTRUCTION Phase 진입, Unit 1 (Backend API) 개발 시작
+
+---
+
+## CONSTRUCTION - Functional Design (Unit 1) - Questions Created
+**Timestamp**: 2026-05-06T01:02:00Z
+**User Input**: "시작해줘"
+**AI Response**: Functional Design 단계 시작. Unit 1 컨텍스트 분석 후 12개 질문 파일 생성 (backend-functional-design-questions.md)
+**Context**: CONSTRUCTION - Functional Design, Unit 1 (Backend API), Part 1 Planning
+
+---
+
+## CONSTRUCTION - Functional Design (Unit 1) - Answers Confirmed
+**Timestamp**: 2026-05-06T01:10:00Z
+**User Input**: "그래 이렇게 해줘" (MVP 추천 기반 + Q2→C, Q4→B, Q10→C로 현업 수준 변경 요청)
+**AI Response**: 질문 파일에 12개 답변 반영 완료. Q2: Soft Delete + 자동 Hard Delete, Q4: 관리자+고객 SSE, Q10: 아카이빙+매출 집계 로그
+**Context**: CONSTRUCTION - Functional Design, Unit 1 (Backend API), 답변 수집 완료
+
+---
+
+## CONSTRUCTION - Functional Design (Unit 1) - Artifacts Generated
+**Timestamp**: 2026-05-06T01:15:00Z
+**User Input**: "응 만들어줘"
+**AI Response**: Functional Design 아티팩트 3개 생성 완료 - domain-entities.md, business-logic-model.md, business-rules.md
+**Context**: CONSTRUCTION - Functional Design, Unit 1 (Backend API), Step 6 아티팩트 생성
+
+---
+
+## CONSTRUCTION - Functional Design (Unit 1) - Review & Fix
+**Timestamp**: 2026-05-06T01:20:00Z
+**User Input**: "수정해줘" (자체 평가 후 2개 이슈 수정 요청)
+**AI Response**: 2개 이슈 수정 완료: (1) OrderItem.menu_id를 NULLABLE + SET NULL ON DELETE로 변경 — Menu Hard Delete 시 FK 무결성 보장, (2) 테이블 로그인 시도 제한 추가 (3회/5분) — brute force 최소 방어
+**Context**: CONSTRUCTION - Functional Design, Unit 1 (Backend API), 리뷰 피드백 반영
+
+---
+
+## CONSTRUCTION - NFR Requirements (Unit 1) - Questions Created
+**Timestamp**: 2026-05-06T01:25:00Z
+**User Input**: "NFR Requirements 진행해줘"
+**AI Response**: Functional Design 승인 처리 후 NFR Requirements 단계 시작. 10개 질문 파일 생성.
+**Context**: CONSTRUCTION - NFR Requirements, Unit 1 (Backend API), 질문 생성
+
+---
+
+## CONSTRUCTION - NFR Requirements (Unit 1) - Artifacts Generated
+**Timestamp**: 2026-05-06T01:30:00Z
+**User Input**: "우선 처음 추천해준 옵션으로 진행해줘"
+**AI Response**: MVP 추천 옵션으로 10개 답변 반영 후 NFR Requirements 아티팩트 2개 생성 완료 (nfr-requirements.md, tech-stack-decisions.md)
+**Context**: CONSTRUCTION - NFR Requirements, Unit 1 (Backend API), 아티팩트 생성 완료
+
+---
+
+## CONSTRUCTION - NFR Requirements (Unit 1) - Approval
+**Timestamp**: 2026-05-06T01:32:00Z
+**User Input**: "응 다음단계 해줘"
+**AI Response**: NFR Requirements 승인 완료. NFR Design 단계 진행.
+**Context**: CONSTRUCTION - NFR Requirements → NFR Design 전환
+
+---
+
+## CONSTRUCTION - NFR Design (Unit 1) - Artifacts Generated
+**Timestamp**: 2026-05-06T01:35:00Z
+**User Input**: "응 다음단계 해줘"
+**AI Response**: NFR Design 아티팩트 2개 생성 완료 (nfr-design-patterns.md, logical-components.md). 7개 설계 패턴 + 9개 논리 컴포넌트 정의.
+**Context**: CONSTRUCTION - NFR Design, Unit 1 (Backend API), 아티팩트 생성 완료
+
+---
+
+## CONSTRUCTION - NFR Design (Unit 1) - Approval
+**Timestamp**: 2026-05-06T01:38:00Z
+**User Input**: "넘어가줘"
+**AI Response**: NFR Design 승인 완료. Infrastructure Design 단계 진행.
+**Context**: CONSTRUCTION - NFR Design → Infrastructure Design 전환
+
+---
+
+## CONSTRUCTION - Infrastructure Design (Unit 1) - Artifacts Generated
+**Timestamp**: 2026-05-06T01:40:00Z
+**User Input**: "넘어가줘"
+**AI Response**: Infrastructure Design 아티팩트 생성 완료 (infrastructure-design.md). Docker Compose 로컬 환경 + AWS 프로덕션 환경 설계.
+**Context**: CONSTRUCTION - Infrastructure Design, Unit 1 (Backend API), 아티팩트 생성 완료
+
+---
+
+## CONSTRUCTION - Infrastructure Design (Unit 1) - Approval
+**Timestamp**: 2026-05-06T01:42:00Z
+**User Input**: "그래 다음단계 해줘" (로컬 개발 환경 S3 대체 방안 확인 후)
+**AI Response**: Infrastructure Design 승인 완료. Code Generation 단계 진행. 로컬 개발 시 S3 → LocalStorage 대체 방안 코드 생성에 반영 예정.
+**Context**: CONSTRUCTION - Infrastructure Design → Code Generation 전환
+
+---
+
+## CONSTRUCTION - Code Generation (Unit 1) - Plan Created
+**Timestamp**: 2026-05-06T01:45:00Z
+**User Input**: "그래 다음단계 해줘"
+**AI Response**: Code Generation Plan 생성 완료. 15개 Step, 19개 스토리 100% 커버리지. 로컬 파일 저장 + Docker Compose 기반.
+**Context**: CONSTRUCTION - Code Generation, Unit 1 (Backend API), Part 1 Planning
+
+---
+
+## CONSTRUCTION - Code Generation (Unit 1) - Complete
+**Timestamp**: 2026-05-06T02:00:00Z
+**User Input**: "응 코드 생성해줘" + "확인해주고 나머지도 계속 전부 계속 진행해줘"
+**AI Response**: Code Generation 완료. Step 1~14 실행. 프로젝트 구조, 인증, 테이블, 메뉴, 주문, SSE, Alembic, 시드, 테스트 conftest 생성.
+**Context**: CONSTRUCTION - Code Generation, Unit 1 (Backend API), Part 2 Generation 완료
+
+---
