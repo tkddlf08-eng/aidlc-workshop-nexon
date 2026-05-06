@@ -1,21 +1,22 @@
 export interface Category {
-  id: string;
+  id: number;
   name: string;
   sortOrder: number;
-  menuCount: number;
+  menuCount?: number;
 }
 
 export interface Menu {
-  id: string;
+  id: number;
   name: string;
   price: number;
   description?: string;
-  categoryId: string;
-  categoryName: string;
+  categoryId: number;
+  categoryName?: string;
   imageUrl?: string;
   sortOrder: number;
-  createdAt: string;
-  updatedAt: string;
+  isSoldOut: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface MenuFormData {
@@ -36,5 +37,5 @@ export interface UpdateSortOrderRequest {
 }
 
 export interface ImageUploadResponse {
-  imageUrl: string;
+  image_url: string;
 }

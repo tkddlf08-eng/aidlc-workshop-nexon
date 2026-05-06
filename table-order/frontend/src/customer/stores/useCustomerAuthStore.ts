@@ -38,8 +38,8 @@ export const useCustomerAuthStore = create<CustomerAuthStore>()(
         set({ isLoading: true, error: null });
         try {
           const response = await apiClient.post<LoginResponse>(ENDPOINTS.AUTH.TABLE_LOGIN, {
-            store_id: credentials.storeId,
-            table_number: credentials.tableNumber,
+            store_code: credentials.storeId,
+            table_number: Number(credentials.tableNumber),
             password: credentials.password,
           });
 

@@ -3,22 +3,26 @@ import { apiClient } from './client';
 import { ENDPOINTS } from './endpoints';
 import type { Category, Menu, Order, PaginatedResponse } from './types';
 
-export function useCategories() {
+export function useCategories(storeId?: number) {
   return useQuery({
-    queryKey: ['categories'],
+    queryKey: ['categories', storeId],
     queryFn: async () => {
-      const response = await apiClient.get<Category[]>(ENDPOINTS.CATEGORIES);
+      const response = await apiClient.get<Category[]>(ENDPOINTS.CATEGORIES, {
+        params: { store_id: storeId },
+      });
       return response.data;
     },
+    enabled: !!storeId,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }
 
-export function useMenus(categoryId?: string) {
+export function useMenus(categoryId?: number) {
   return useQuery({
     queryKey: ['menus', categoryId],
     queryFn: async () => {
-      const params = categoryId ? { category_id: categoryId } : {};
+      const params: Record<string, unknown> = {};
+      if (categoryId) params.category_id = categoryId;
       const response = await apiClient.get<Menu[]>(ENDPOINTS.MENUS, { params });
       return response.data;
     },
@@ -26,7 +30,7 @@ export function useMenus(categoryId?: string) {
   });
 }
 
-export function useSessionOrders(sessionId: string | null, page = 1, limit = 10) {
+export function useSessionOrders(sessionId: number | null, page = 1, limit = 10) {
   return useQuery({
     queryKey: ['orders', sessionId, page],
     queryFn: async () => {

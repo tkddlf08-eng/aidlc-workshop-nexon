@@ -149,3 +149,31 @@ async def get_order_history(
             "has_prev": pagination.page > 1,
         },
     }
+
+
+@router.get("/stream")
+async def order_stream(
+    token: str = Query(...),
+    db: AsyncSession = Depends(get_db),
+):
+    """SSE stream for real-time order updates (admin)."""
+    from uuid import uuid4
+
+    from sse_starlette.sse import EventSourceResponse
+
+    from app.core.security import decode_access_token
+    from app.orders.sse import sse_manager
+
+    # Validate token
+    payload = decode_access_token(token)
+    if not payload or payload.get("role") != "admin":
+        from fastapi.responses import JSONResponse
+        return JSONResponse(status_code=401, content={"message": "Unauthorized"})
+
+    client_id = str(uuid4())
+
+    async def event_generator():
+        async for event in sse_manager.subscribe_admin(client_id):
+            yield event
+
+    return EventSourceResponse(event_generator())

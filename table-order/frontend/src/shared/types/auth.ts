@@ -5,13 +5,15 @@ export interface AdminInfo {
 }
 
 export interface LoginRequest {
-  storeId: string;
+  store_code: string;
   username: string;
   password: string;
 }
 
 export interface LoginResponse {
-  token: string;
-  expiresAt: string;
-  admin: AdminInfo;
+  access_token: string;
+  token_type: string;
+  admin_id: number;
+  store_id: number;
+  username: string;
 }

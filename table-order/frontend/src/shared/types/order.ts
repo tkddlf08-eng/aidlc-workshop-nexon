@@ -1,55 +1,54 @@
 export type OrderStatus = 'PENDING' | 'PREPARING' | 'COMPLETED';
 
 export interface OrderItem {
-  id: string;
-  menuId: string;
-  menuName: string;
+  id: number;
+  menu_id: number | null;
+  menu_name: string;
   quantity: number;
-  unitPrice: number;
+  unit_price: number;
   subtotal: number;
 }
 
 export interface Order {
-  id: string;
-  orderNumber: string;
-  tableId: string;
-  sessionId: string;
+  id: number;
+  order_number: string;
+  table_id: number;
+  session_id: number;
   status: OrderStatus;
   items: OrderItem[];
-  totalAmount: number;
-  createdAt: string;
-  updatedAt: string;
+  total_amount: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface OrderDetail extends Order {
-  tableNumber: number;
+  table_number?: number;
 }
 
 export interface ArchivedOrder extends Order {
-  archivedAt: string;
+  archived_at: string;
 }
 
 export type SSEEventType = 'new_order' | 'order_status_changed' | 'order_deleted' | 'table_reset';
 
 export interface NewOrderEvent {
   order: Order;
-  tableId: string;
+  table_id: number;
 }
 
 export interface OrderStatusEvent {
-  orderId: string;
-  tableId: string;
-  newStatus: OrderStatus;
+  order_id: number;
+  table_id: number;
+  new_status: OrderStatus;
 }
 
 export interface OrderDeletedEvent {
-  orderId: string;
-  tableId: string;
-  newTotalAmount: number;
+  order_id: number;
+  table_id: number;
 }
 
 export interface TableResetEvent {
-  tableId: string;
+  table_id: number;
 }
 
 export interface UpdateOrderStatusRequest {
@@ -57,9 +56,9 @@ export interface UpdateOrderStatusRequest {
 }
 
 export interface OrderHistoryParams {
-  tableId: string;
-  dateFrom?: string;
-  dateTo?: string;
+  table_id: number;
+  date_from?: string;
+  date_to?: string;
   page?: number;
   limit?: number;
 }

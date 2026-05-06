@@ -1,12 +1,6 @@
 import { tokenStorage } from '@/shared/utils/token-storage';
-import type {
-  SSEEventType,
-  NewOrderEvent,
-  OrderStatusEvent,
-  OrderDeletedEvent,
-  TableResetEvent,
-} from '@/shared/types/order';
 
+type SSEEventType = 'new_order' | 'order_status_changed' | 'order_deleted' | 'table_reset';
 type SSEStatus = 'connected' | 'reconnecting' | 'disconnected';
 type SSEEventHandler = (type: SSEEventType, data: unknown) => void;
 type SSEStatusHandler = (status: SSEStatus) => void;
@@ -40,22 +34,22 @@ export class SSEManager {
     };
 
     this.eventSource.addEventListener('new_order', (event) => {
-      const data: NewOrderEvent = JSON.parse(event.data);
+      const data = JSON.parse(event.data);
       this.onEvent('new_order', data);
     });
 
     this.eventSource.addEventListener('order_status_changed', (event) => {
-      const data: OrderStatusEvent = JSON.parse(event.data);
+      const data = JSON.parse(event.data);
       this.onEvent('order_status_changed', data);
     });
 
     this.eventSource.addEventListener('order_deleted', (event) => {
-      const data: OrderDeletedEvent = JSON.parse(event.data);
+      const data = JSON.parse(event.data);
       this.onEvent('order_deleted', data);
     });
 
     this.eventSource.addEventListener('table_reset', (event) => {
-      const data: TableResetEvent = JSON.parse(event.data);
+      const data = JSON.parse(event.data);
       this.onEvent('table_reset', data);
     });
 

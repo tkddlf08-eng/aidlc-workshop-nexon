@@ -19,7 +19,11 @@ export default function LoginPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await login(formData);
+      await login({
+        store_code: formData.storeId,
+        username: formData.username,
+        password: formData.password,
+      });
       navigate(from, { replace: true });
     } catch {
       // 에러는 store에서 관리

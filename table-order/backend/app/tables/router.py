@@ -7,6 +7,7 @@ from app.core.database import get_db
 from app.core.dependencies import UserInfo, get_current_admin
 from app.tables.schemas import (
     CompleteSessionResponse,
+    DashboardResponse,
     TableResponse,
     TableSetupRequest,
 )
@@ -23,6 +24,16 @@ async def get_tables(
     """테이블 목록 조회."""
     service = TableService(db)
     return await service.get_tables(user.store_id)
+
+
+@router.get("/dashboard", response_model=DashboardResponse)
+async def get_dashboard(
+    user: UserInfo = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """관리자 대시보드 데이터 조회."""
+    service = TableService(db)
+    return await service.get_dashboard(user.store_id)
 
 
 @router.post("/setup", response_model=TableResponse)

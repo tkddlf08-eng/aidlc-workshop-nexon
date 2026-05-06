@@ -27,10 +27,14 @@ export const useAdminAuthStore = create<AdminAuthState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await apiClient.post<LoginResponse>('/api/auth/admin/login', credentials);
-      const { token, expiresAt, admin } = response.data;
+      const { access_token, admin_id, store_id, username } = response.data;
 
-      tokenStorage.set(token, expiresAt);
-      set({ token, admin, expiresAt, isLoading: false, error: null });
+      // Backend doesn't return expiresAt, calculate from JWT_ADMIN_EXPIRE_HOURS (16h)
+      const expiresAt = new Date(Date.now() + 16 * 60 * 60 * 1000).toISOString();
+      const admin: AdminInfo = { id: String(admin_id), storeId: String(store_id), username };
+
+      tokenStorage.set(access_token, expiresAt);
+      set({ token: access_token, admin, expiresAt, isLoading: false, error: null });
 
       // 자동 로그아웃 타이머 설정
       const timeUntilExpiry = new Date(expiresAt).getTime() - Date.now();
@@ -41,7 +45,8 @@ export const useAdminAuthStore = create<AdminAuthState>((set, get) => ({
       }
     } catch (error: unknown) {
       const message =
-        (error as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+        (error as { response?: { data?: { message?: string; detail?: string } } })?.response?.data?.message ||
+        (error as { response?: { data?: { detail?: string } } })?.response?.data?.detail ||
         '로그인에 실패했습니다. 다시 시도해주세요.';
       set({ isLoading: false, error: message });
       throw error;

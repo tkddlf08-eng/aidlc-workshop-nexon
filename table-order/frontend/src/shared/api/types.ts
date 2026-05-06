@@ -15,28 +15,31 @@ export interface TableAuthInfo {
 
 export interface LoginResponse {
   access_token: string;
-  table_id: string;
-  table_number: string;
-  store_id: string;
-  session_id: string | null;
+  token_type: string;
+  table_id: number;
+  store_id: number;
+  table_number: number;
 }
 
 // Menu
 export interface Category {
-  id: string;
+  id: number;
+  store_id: number;
   name: string;
   sort_order: number;
+  created_at: string;
 }
 
 export interface Menu {
-  id: string;
-  category_id: string;
+  id: number;
+  category_id: number;
   name: string;
   price: number;
-  description: string;
+  description: string | null;
   image_url: string | null;
   sort_order: number;
-  is_available: boolean;
+  is_sold_out: boolean;
+  created_at: string;
 }
 
 // Cart
@@ -52,54 +55,54 @@ export interface CartItem {
 export type OrderStatus = 'PENDING' | 'PREPARING' | 'COMPLETED';
 
 export interface OrderItem {
-  id: string;
-  menu_id: string;
+  id: number;
+  menu_id: number | null;
   menu_name: string;
   quantity: number;
   unit_price: number;
+  subtotal: number;
 }
 
 export interface Order {
-  id: string;
+  id: number;
   order_number: string;
-  table_id: string;
-  session_id: string;
+  table_id: number;
+  session_id: number;
   status: OrderStatus;
   total_amount: number;
   items: OrderItem[];
   created_at: string;
+  updated_at: string;
 }
 
 export interface CreateOrderRequest {
-  table_id: string;
-  session_id: string | null;
   items: {
-    menu_id: string;
+    menu_id: number;
     quantity: number;
-    unit_price: number;
   }[];
 }
 
 export interface CreateOrderResponse {
-  id: string;
+  id: number;
   order_number: string;
-  session_id: string;
+  table_id: number;
+  session_id: number;
   total_amount: number;
   status: OrderStatus;
+  items: OrderItem[];
   created_at: string;
+  updated_at: string;
 }
 
 // Pagination
 export interface PaginatedResponse<T> {
   items: T[];
-  total: number;
-  page: number;
-  limit: number;
-  has_next: boolean;
-}
-
-// Error
-export interface ApiError {
-  detail: string;
-  status: number;
+  pagination: {
+    page: number;
+    limit: number;
+    total_items: number;
+    total_pages: number;
+    has_next: boolean;
+    has_prev: boolean;
+  };
 }

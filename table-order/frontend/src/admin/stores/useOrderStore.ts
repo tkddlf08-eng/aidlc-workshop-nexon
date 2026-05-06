@@ -1,22 +1,15 @@
 import { create } from 'zustand';
 import apiClient from '@/shared/api/client';
 import { SSEManager } from '@/admin/services/sse-manager';
-import type {
-  OrderDetail,
-  OrderStatus,
-  SSEEventType,
-  NewOrderEvent,
-  OrderStatusEvent,
-  OrderDeletedEvent,
-  TableResetEvent,
-} from '@/shared/types/order';
-import type { Table } from '@/shared/types/table';
+import type { Table, DashboardData } from '@/shared/types/table';
 
+type OrderStatus = 'PENDING' | 'PREPARING' | 'COMPLETED';
 type SSEConnectionStatus = 'connected' | 'reconnecting' | 'disconnected';
+type SSEEventType = 'new_order' | 'order_status_changed' | 'order_deleted' | 'table_reset';
 
 interface OrderState {
   tables: Table[];
-  selectedOrder: OrderDetail | null;
+  selectedOrder: unknown | null;
   isDrawerOpen: boolean;
   isLoading: boolean;
   sseStatus: SSEConnectionStatus;
@@ -44,7 +37,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   loadDashboard: async () => {
     set({ isLoading: true });
     try {
-      const response = await apiClient.get<{ tables: Table[] }>('/api/tables/dashboard');
+      const response = await apiClient.get<DashboardData>('/api/tables/dashboard');
       set({ tables: response.data.tables, isLoading: false });
     } catch {
       set({ isLoading: false });
@@ -54,74 +47,9 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   subscribeToOrders: () => {
     const manager = new SSEManager(
       (type: SSEEventType, data: unknown) => {
-        const state = get();
-        switch (type) {
-          case 'new_order': {
-            const event = data as NewOrderEvent;
-            const tables = state.tables.map((table) => {
-              if (table.id === event.tableId) {
-                return {
-                  ...table,
-                  orders: [...table.orders, event.order],
-                  totalOrderAmount: table.totalOrderAmount + event.order.totalAmount,
-                };
-              }
-              return table;
-            });
-            const highlighted = new Set(state.highlightedOrderIds);
-            highlighted.add(event.order.id);
-            set({ tables, highlightedOrderIds: highlighted });
-            setTimeout(() => {
-              set((s) => {
-                const h = new Set(s.highlightedOrderIds);
-                h.delete(event.order.id);
-                return { highlightedOrderIds: h };
-              });
-            }, 3000);
-            break;
-          }
-          case 'order_status_changed': {
-            const event = data as OrderStatusEvent;
-            const tables = state.tables.map((table) => {
-              if (table.id === event.tableId) {
-                return {
-                  ...table,
-                  orders: table.orders.map((order) =>
-                    order.id === event.orderId ? { ...order, status: event.newStatus } : order
-                  ),
-                };
-              }
-              return table;
-            });
-            set({ tables });
-            break;
-          }
-          case 'order_deleted': {
-            const event = data as OrderDeletedEvent;
-            const tables = state.tables.map((table) => {
-              if (table.id === event.tableId) {
-                return {
-                  ...table,
-                  orders: table.orders.filter((order) => order.id !== event.orderId),
-                  totalOrderAmount: event.newTotalAmount,
-                };
-              }
-              return table;
-            });
-            set({ tables });
-            break;
-          }
-          case 'table_reset': {
-            const event = data as TableResetEvent;
-            const tables = state.tables.map((table) => {
-              if (table.id === event.tableId) {
-                return { ...table, orders: [], totalOrderAmount: 0, currentSession: undefined };
-              }
-              return table;
-            });
-            set({ tables });
-            break;
-          }
+        // Handle SSE events - reload dashboard on any event for simplicity
+        if (type === 'new_order' || type === 'order_status_changed' || type === 'order_deleted' || type === 'table_reset') {
+          get().loadDashboard();
         }
       },
       (status) => {
@@ -138,44 +66,19 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     set({ sseManager: null, sseStatus: 'disconnected' });
   },
 
-  updateOrderStatus: async (orderId, tableId, status) => {
-    const previousTables = get().tables;
-    // Optimistic update
-    set((state) => ({
-      tables: state.tables.map((table) => {
-        if (table.id === tableId) {
-          return {
-            ...table,
-            orders: table.orders.map((order) =>
-              order.id === orderId ? { ...order, status } : order
-            ),
-          };
-        }
-        return table;
-      }),
-    }));
-
+  updateOrderStatus: async (orderId, _tableId, status) => {
     try {
       await apiClient.patch(`/api/orders/${orderId}/status`, { status });
+      await get().loadDashboard();
     } catch {
-      set({ tables: previousTables });
       throw new Error('상태 변경에 실패했습니다');
     }
   },
 
-  deleteOrder: async (orderId, tableId) => {
+  deleteOrder: async (orderId, _tableId) => {
     try {
       await apiClient.delete(`/api/orders/${orderId}`);
-      set((state) => ({
-        tables: state.tables.map((table) => {
-          if (table.id === tableId) {
-            const remainingOrders = table.orders.filter((o) => o.id !== orderId);
-            const newTotal = remainingOrders.reduce((sum, o) => sum + o.totalAmount, 0);
-            return { ...table, orders: remainingOrders, totalOrderAmount: newTotal };
-          }
-          return table;
-        }),
-      }));
+      await get().loadDashboard();
     } catch {
       throw new Error('주문 삭제에 실패했습니다');
     }
@@ -183,7 +86,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
 
   selectOrder: async (orderId) => {
     try {
-      const response = await apiClient.get<OrderDetail>(`/api/orders/${orderId}`);
+      const response = await apiClient.get(`/api/orders/${orderId}`);
       set({ selectedOrder: response.data, isDrawerOpen: true });
     } catch {
       throw new Error('주문 상세 조회에 실패했습니다');

@@ -1,8 +1,19 @@
 import { create } from 'zustand';
 import { apiClient } from '@shared/api/client';
 import { ENDPOINTS } from '@shared/api/endpoints';
-import type { CartItem, CreateOrderResponse } from '@shared/api/types';
-import { useCustomerAuthStore } from './useCustomerAuthStore';
+import type { CartItem } from '@shared/api/types';
+
+interface CreateOrderResponse {
+  id: number;
+  order_number: string;
+  table_id: number;
+  session_id: number;
+  total_amount: number;
+  status: string;
+  items: unknown[];
+  created_at: string;
+  updated_at: string;
+}
 
 interface OrderState {
   lastOrderNumber: string | null;
@@ -27,27 +38,15 @@ export const useOrderStore = create<OrderStore>((set) => ({
   createOrder: async (items: CartItem[]) => {
     set({ isSubmitting: true, error: null });
     try {
-      const authStore = useCustomerAuthStore.getState();
-      const tableId = authStore.tableInfo?.tableId;
-      const sessionId = authStore.getSessionId();
-
+      // Backend only needs items - table_id and session come from JWT token
       const response = await apiClient.post<CreateOrderResponse>(ENDPOINTS.ORDERS, {
-        table_id: tableId,
-        session_id: sessionId,
         items: items.map((item) => ({
-          menu_id: item.menuId,
+          menu_id: Number(item.menuId),
           quantity: item.quantity,
-          unit_price: item.price,
         })),
       });
 
       const data = response.data;
-
-      // Update session ID if new session was created
-      if (data.session_id && data.session_id !== sessionId) {
-        authStore.setSessionId(data.session_id);
-      }
-
       set({ lastOrderNumber: data.order_number, isSubmitting: false });
       return data;
     } catch (error: unknown) {

@@ -5,7 +5,7 @@ import type { LoginResponse, CreateOrderRequest, CreateOrderResponse } from './t
 
 export function useTableLogin() {
   return useMutation({
-    mutationFn: async (data: { store_id: string; table_number: string; password: string }) => {
+    mutationFn: async (data: { store_code: string; table_number: number; password: string }) => {
       const response = await apiClient.post<LoginResponse>(ENDPOINTS.AUTH.TABLE_LOGIN, data);
       return response.data;
     },

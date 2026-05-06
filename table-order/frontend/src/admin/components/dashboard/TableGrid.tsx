@@ -15,7 +15,7 @@ export default function TableGrid() {
       data-testid="table-grid"
     >
       {tables.map((table) => (
-        <TableCard key={table.id} table={table} />
+        <TableCard key={table.table_id} table={table} />
       ))}
     </div>
   );

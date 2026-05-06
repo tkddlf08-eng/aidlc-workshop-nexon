@@ -10,19 +10,32 @@ export interface TableSession {
   closedAt?: string;
 }
 
+export interface DashboardOrder {
+  id: number;
+  order_number: string;
+  status: string;
+  total_amount: number;
+  created_at: string;
+  items: {
+    id: number;
+    menu_name: string;
+    quantity: number;
+    unit_price: number;
+    subtotal: number;
+  }[];
+}
+
 export interface Table {
-  id: string;
-  tableNumber: number;
-  storeId: string;
-  currentSession?: TableSession;
-  orders: Order[];
-  totalOrderAmount: number;
+  table_id: number;
+  table_number: number;
+  has_active_session: boolean;
+  total_order_amount: number;
+  order_count: number;
+  recent_orders: DashboardOrder[];
 }
 
 export interface DashboardData {
   tables: Table[];
-  totalActiveOrders: number;
-  totalRevenue: number;
 }
 
 export interface TableSetupRequest {
