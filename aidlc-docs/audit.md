@@ -111,3 +111,19 @@
 **Context**: INCEPTION - Units Generation 완료
 
 ---
+
+## CONSTRUCTION - Unit 3 (Admin Frontend) Start
+**Timestamp**: 2026-05-06T01:00:00Z
+**User Input**: "지금 이 프로젝트를 3명이 진행하고 있고, 3명이 각자 역할을 나눠 개발하기 위해 유닛을 나눴어. 나는 여기서 Unit3. Admin Frontend 구축을 맡았어. unit 3 를 진행해줘"
+**AI Response**: Unit 3 (Admin Frontend) Construction Phase 시작 - Functional Design 단계 진행
+**Context**: CONSTRUCTION - Functional Design (Unit 3: Admin Frontend) 시작
+
+---
+
+## CONSTRUCTION - Functional Design (Unit 3) - Questions Answered
+**Timestamp**: 2026-05-06T01:05:00Z
+**User Input**: "모두 답변했어. 다음 단계 진행해줘"
+**AI Response**: 8개 질문 답변 확인 완료. Q1:B(반응형 그리드), Q2:B(사이드 패널), Q3:A(마스터-디테일, 사용자 요청에 따라 가장 일반적인 방식 선택), Q4:B(좌측 사이드바), Q5:A(우측 상단), Q6:A(별도 페이지), Q7:A(@dnd-kit/core), Q8:A(지수 백오프). Functional Design 아티팩트 생성 완료.
+**Context**: CONSTRUCTION - Functional Design (Unit 3), 질문 답변 수집 및 설계 문서 생성
+
+---
