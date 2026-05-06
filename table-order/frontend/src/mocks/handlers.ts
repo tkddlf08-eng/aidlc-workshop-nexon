@@ -36,7 +36,7 @@ export const handlers = [
     const url = new URL(request.url);
     const categoryId = url.searchParams.get('category_id');
     const filtered = categoryId
-      ? mockMenus.filter((m) => m.category_id === categoryId)
+      ? mockMenus.filter((m) => m.category_id === Number(categoryId))
       : mockMenus;
     return HttpResponse.json(filtered);
   }),
