@@ -1,37 +1,18 @@
 import { useState } from 'react';
-import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Plus } from 'lucide-react';
 import MenuItem from './MenuItem';
 import MenuFormModal from './MenuFormModal';
 import Button from '@/shared/components/Button';
 import EmptyState from '@/shared/components/EmptyState';
 import LoadingSpinner from '@/shared/components/LoadingSpinner';
-import { useMenuStore } from '@/admin/stores/useMenuStore';
-import { useUIStore } from '@/admin/stores/useUIStore';
-import type { Menu } from '@/shared/types/menu';
+import { useMenuStore, type DisplayMenu } from '@/admin/stores/useMenuStore';
 
 export default function MenuPanel() {
-  const { menus, selectedCategoryId, isLoading, reorderMenu } = useMenuStore();
-  const { showToast } = useUIStore();
+  const { menus, selectedCategoryId, isLoading } = useMenuStore();
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingMenu, setEditingMenu] = useState<Menu | undefined>();
+  const [editingMenu, setEditingMenu] = useState<DisplayMenu | undefined>();
 
-  const handleDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const newIndex = menus.findIndex((m) => m.id === over.id);
-    if (newIndex === -1) return;
-
-    try {
-      await reorderMenu(String(active.id), newIndex);
-    } catch {
-      showToast('error', '순서 변경에 실패했습니다');
-    }
-  };
-
-  const handleEdit = (menu: Menu) => {
+  const handleEdit = (menu: DisplayMenu) => {
     setEditingMenu(menu);
     setIsFormOpen(true);
   };
@@ -69,15 +50,11 @@ export default function MenuPanel() {
         ) : menus.length === 0 ? (
           <EmptyState title="메뉴가 없습니다" description="메뉴를 추가해주세요" />
         ) : (
-          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={menus.map((m) => m.id)} strategy={verticalListSortingStrategy}>
-              <div className="space-y-2">
-                {menus.map((menu) => (
-                  <MenuItem key={menu.id} menu={menu} onEdit={() => handleEdit(menu)} />
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
+          <div className="space-y-2">
+            {menus.map((menu) => (
+              <MenuItem key={menu.id} menu={menu} onEdit={() => handleEdit(menu)} />
+            ))}
+          </div>
         )}
       </div>
 

@@ -1,5 +1,3 @@
-import type { Order } from './order';
-
 export type SessionStatus = 'ACTIVE' | 'CLOSED';
 
 export interface TableSession {

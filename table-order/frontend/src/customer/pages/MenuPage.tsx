@@ -4,11 +4,14 @@ import { CategoryTabs } from '@customer/components/CategoryTabs';
 import { MenuGrid } from '@customer/components/MenuGrid';
 import { LoadingSpinner } from '@shared/components/LoadingSpinner';
 import { EmptyState } from '@shared/components/EmptyState';
+import { useCustomerAuthStore } from '@customer/stores/useCustomerAuthStore';
 
 export default function MenuPage() {
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(undefined);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(undefined);
+  const tableInfo = useCustomerAuthStore((s) => s.tableInfo);
+  const storeId = tableInfo?.storeId ? Number(tableInfo.storeId) : undefined;
 
-  const { data: categories = [], isLoading: categoriesLoading } = useCategories();
+  const { data: categories = [], isLoading: categoriesLoading } = useCategories(storeId);
   const { data: menus = [], isLoading: menusLoading } = useMenus(selectedCategoryId);
 
   const isLoading = categoriesLoading || menusLoading;

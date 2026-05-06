@@ -46,11 +46,9 @@ export const useOrderStore = create<OrderState>((set, get) => ({
 
   subscribeToOrders: () => {
     const manager = new SSEManager(
-      (type: SSEEventType, data: unknown) => {
-        // Handle SSE events - reload dashboard on any event for simplicity
-        if (type === 'new_order' || type === 'order_status_changed' || type === 'order_deleted' || type === 'table_reset') {
-          get().loadDashboard();
-        }
+      (_type: SSEEventType, _data: unknown) => {
+        // Handle SSE events - reload dashboard on any event
+        get().loadDashboard();
       },
       (status) => {
         set({ sseStatus: status });

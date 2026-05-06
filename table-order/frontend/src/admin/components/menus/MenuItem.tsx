@@ -1,28 +1,16 @@
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, Pencil, Trash2 } from 'lucide-react';
-import { useMenuStore } from '@/admin/stores/useMenuStore';
+import { Pencil, Trash2 } from 'lucide-react';
+import { useMenuStore, type DisplayMenu } from '@/admin/stores/useMenuStore';
 import { useUIStore } from '@/admin/stores/useUIStore';
 import { formatPrice } from '@/shared/utils/format';
-import type { Menu } from '@/shared/types/menu';
 
 interface MenuItemProps {
-  menu: Menu;
+  menu: DisplayMenu;
   onEdit: () => void;
 }
 
 export default function MenuItem({ menu, onEdit }: MenuItemProps) {
   const deleteMenu = useMenuStore((state) => state.deleteMenu);
   const { showToast, showConfirm } = useUIStore();
-
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-    id: menu.id,
-  });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
 
   const handleDelete = () => {
     showConfirm({
@@ -43,20 +31,9 @@ export default function MenuItem({ menu, onEdit }: MenuItemProps) {
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
       className="group flex items-center gap-3 p-3 bg-white border rounded-lg hover:border-gray-300 transition-colors"
       data-testid={`menu-item-${menu.id}`}
     >
-      <button
-        {...attributes}
-        {...listeners}
-        className="p-1 cursor-grab opacity-0 group-hover:opacity-100 transition-opacity"
-        aria-label="드래그하여 순서 변경"
-      >
-        <GripVertical className="h-4 w-4 text-gray-400" />
-      </button>
-
       {menu.imageUrl ? (
         <img
           src={menu.imageUrl}
@@ -74,6 +51,9 @@ export default function MenuItem({ menu, onEdit }: MenuItemProps) {
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-gray-900 truncate">{menu.name}</p>
         <p className="text-sm text-primary font-semibold">{formatPrice(menu.price)}</p>
+        {menu.isSoldOut && (
+          <span className="text-xs text-red-500">품절</span>
+        )}
       </div>
 
       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">

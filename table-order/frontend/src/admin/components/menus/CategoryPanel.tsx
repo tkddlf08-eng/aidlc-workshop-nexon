@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Plus } from 'lucide-react';
 import CategoryItem from './CategoryItem';
 import Button from '@/shared/components/Button';
@@ -8,7 +6,7 @@ import { useMenuStore } from '@/admin/stores/useMenuStore';
 import { useUIStore } from '@/admin/stores/useUIStore';
 
 export default function CategoryPanel() {
-  const { categories, selectedCategoryId, selectCategory, createCategory, reorderCategory } =
+  const { categories, selectedCategoryId, selectCategory, createCategory } =
     useMenuStore();
   const { showToast } = useUIStore();
   const [isAdding, setIsAdding] = useState(false);
@@ -23,21 +21,6 @@ export default function CategoryPanel() {
       showToast('success', '카테고리가 추가되었습니다');
     } catch {
       showToast('error', '카테고리 추가에 실패했습니다');
-    }
-  };
-
-  const handleDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const oldIndex = categories.findIndex((c) => c.id === active.id);
-    const newIndex = categories.findIndex((c) => c.id === over.id);
-    if (oldIndex === -1 || newIndex === -1) return;
-
-    try {
-      await reorderCategory(String(active.id), newIndex);
-    } catch {
-      showToast('error', '순서 변경에 실패했습니다');
     }
   };
 
@@ -82,18 +65,14 @@ export default function CategoryPanel() {
       )}
 
       <div className="flex-1 overflow-y-auto p-2 space-y-0.5">
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={categories.map((c) => c.id)} strategy={verticalListSortingStrategy}>
-            {categories.map((category) => (
-              <CategoryItem
-                key={category.id}
-                category={category}
-                isSelected={category.id === selectedCategoryId}
-                onSelect={() => selectCategory(category.id)}
-              />
-            ))}
-          </SortableContext>
-        </DndContext>
+        {categories.map((category) => (
+          <CategoryItem
+            key={category.id}
+            category={category}
+            isSelected={category.id === selectedCategoryId}
+            onSelect={() => selectCategory(category.id)}
+          />
+        ))}
       </div>
     </div>
   );

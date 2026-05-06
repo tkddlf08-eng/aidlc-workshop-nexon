@@ -2,14 +2,13 @@ import { useState, useEffect, FormEvent } from 'react';
 import Modal from '@/shared/components/Modal';
 import Button from '@/shared/components/Button';
 import ImageUploader from './ImageUploader';
-import { useMenuStore } from '@/admin/stores/useMenuStore';
+import { useMenuStore, type DisplayMenu } from '@/admin/stores/useMenuStore';
 import { useUIStore } from '@/admin/stores/useUIStore';
-import type { Menu } from '@/shared/types/menu';
 
 interface MenuFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialData?: Menu;
+  initialData?: DisplayMenu;
 }
 
 export default function MenuFormModal({ isOpen, onClose, initialData }: MenuFormModalProps) {
@@ -33,7 +32,7 @@ export default function MenuFormModal({ isOpen, onClose, initialData }: MenuForm
         name: initialData.name,
         price: String(initialData.price),
         description: initialData.description || '',
-        categoryId: initialData.categoryId,
+        categoryId: String(initialData.categoryId),
       });
     } else {
       setFormData({ name: '', price: '', description: '', categoryId: '' });
@@ -69,7 +68,7 @@ export default function MenuFormModal({ isOpen, onClose, initialData }: MenuForm
       };
 
       if (isEditing) {
-        await updateMenu(initialData.id, data);
+        await updateMenu(initialData!.id, data);
         showToast('success', '메뉴가 수정되었습니다');
       } else {
         await createMenu(data);
@@ -143,7 +142,7 @@ export default function MenuFormModal({ isOpen, onClose, initialData }: MenuForm
         </div>
 
         <ImageUploader
-          currentImageUrl={initialData?.imageUrl}
+          currentImageUrl={initialData?.imageUrl || undefined}
           onImageSelect={setImage}
           onImageRemove={() => setImage(undefined)}
         />

@@ -68,8 +68,12 @@ export const useAdminAuthStore = create<AdminAuthState>((set, get) => ({
 
     set({ isLoading: true });
     try {
-      const response = await apiClient.get<AdminInfo>('/api/auth/me');
-      set({ admin: response.data, isLoading: false });
+      const response = await apiClient.get<{ sub: string; store_id: number; role: string }>('/api/auth/me');
+      const data = response.data;
+      // sub format: "admin:{id}"
+      const adminId = data.sub.split(':')[1] || '0';
+      const admin: AdminInfo = { id: adminId, storeId: String(data.store_id), username: '' };
+      set({ admin, isLoading: false });
 
       // 자동 로그아웃 타이머 설정
       const expiresAt = tokenStorage.getExpiresAt();

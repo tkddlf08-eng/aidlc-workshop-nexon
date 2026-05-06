@@ -2,8 +2,8 @@ import type { Category } from '@shared/api/types';
 
 interface CategoryTabsProps {
   categories: Category[];
-  selectedId: string | undefined;
-  onSelect: (categoryId: string | undefined) => void;
+  selectedId: number | undefined;
+  onSelect: (categoryId: number | undefined) => void;
 }
 
 export function CategoryTabs({ categories, selectedId, onSelect }: CategoryTabsProps) {

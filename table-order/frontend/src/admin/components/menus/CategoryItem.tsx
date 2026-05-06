@@ -4,10 +4,10 @@ import { GripVertical, Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useMenuStore } from '@/admin/stores/useMenuStore';
 import { useUIStore } from '@/admin/stores/useUIStore';
-import type { Category } from '@/shared/types/menu';
+import type { DisplayCategory } from '@/admin/stores/useMenuStore';
 
 interface CategoryItemProps {
-  category: Category;
+  category: DisplayCategory;
   isSelected: boolean;
   onSelect: () => void;
 }
@@ -42,10 +42,6 @@ export default function CategoryItem({ category, isSelected, onSelect }: Categor
   };
 
   const handleDelete = () => {
-    if (category.menuCount > 0) {
-      showToast('error', '메뉴가 있는 카테고리는 삭제할 수 없습니다');
-      return;
-    }
     showConfirm({
       title: '카테고리 삭제',
       message: `"${category.name}" 카테고리를 삭제하시겠습니까?`,
@@ -100,7 +96,6 @@ export default function CategoryItem({ category, isSelected, onSelect }: Categor
         <GripVertical className="h-3.5 w-3.5 text-gray-400" />
       </button>
       <span className="flex-1 text-sm font-medium truncate">{category.name}</span>
-      <span className="text-xs text-gray-400">{category.menuCount}</span>
       <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={(e) => { e.stopPropagation(); setIsEditing(true); setEditName(category.name); }}

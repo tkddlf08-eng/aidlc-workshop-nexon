@@ -7,7 +7,10 @@ import { EmptyState } from '@shared/components/EmptyState';
 import { Button } from '@shared/components/Button';
 
 export default function OrderHistoryPage() {
-  const sessionId = useCustomerAuthStore((state) => state.tableInfo?.sessionId || null);
+  const sessionId = useCustomerAuthStore((state) => {
+    const sid = state.tableInfo?.sessionId;
+    return sid ? Number(sid) : null;
+  });
   const [page, setPage] = useState(1);
 
   const { data, isLoading } = useSessionOrders(sessionId, page);
@@ -32,7 +35,7 @@ export default function OrderHistoryPage() {
         <OrderCard key={order.id} order={order} />
       ))}
 
-      {data.has_next && (
+      {data.pagination.has_next && (
         <Button
           variant="secondary"
           onClick={() => setPage((p) => p + 1)}

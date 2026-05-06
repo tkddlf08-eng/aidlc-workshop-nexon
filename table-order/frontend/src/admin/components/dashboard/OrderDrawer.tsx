@@ -3,10 +3,24 @@ import { useOrderStore } from '@/admin/stores/useOrderStore';
 import { formatPrice, formatDateTime } from '@/shared/utils/format';
 import LoadingSpinner from '@/shared/components/LoadingSpinner';
 
+interface OrderDetailData {
+  id: number;
+  order_number: string;
+  table_id: number;
+  session_id: number;
+  total_amount: number;
+  status: string;
+  items: { id: number; menu_id: number | null; menu_name: string; quantity: number; unit_price: number; subtotal: number }[];
+  created_at: string;
+  updated_at: string;
+}
+
 export default function OrderDrawer() {
   const { isDrawerOpen, selectedOrder, closeDrawer } = useOrderStore();
 
   if (!isDrawerOpen) return null;
+
+  const order = selectedOrder as OrderDetailData | null;
 
   return (
     <>
@@ -31,22 +45,22 @@ export default function OrderDrawer() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
-          {!selectedOrder ? (
+          {!order ? (
             <LoadingSpinner className="h-full" />
           ) : (
             <div className="space-y-4">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">주문 번호</span>
-                  <span className="font-medium">#{selectedOrder.orderNumber}</span>
+                  <span className="font-medium">#{order.order_number}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">주문 시각</span>
-                  <span>{formatDateTime(selectedOrder.createdAt)}</span>
+                  <span>{formatDateTime(order.created_at)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">테이블</span>
-                  <span>테이블 {selectedOrder.tableNumber}</span>
+                  <span className="text-gray-500">테이블 ID</span>
+                  <span>테이블 {order.table_id}</span>
                 </div>
               </div>
 
@@ -55,10 +69,10 @@ export default function OrderDrawer() {
               <div>
                 <h4 className="text-sm font-medium text-gray-900 mb-2">주문 항목</h4>
                 <div className="space-y-2">
-                  {selectedOrder.items.map((item) => (
+                  {order.items.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
                       <span className="text-gray-700">
-                        {item.menuName} × {item.quantity}
+                        {item.menu_name} × {item.quantity}
                       </span>
                       <span className="text-gray-900 font-medium">
                         {formatPrice(item.subtotal)}
@@ -72,7 +86,7 @@ export default function OrderDrawer() {
 
               <div className="flex justify-between text-base font-semibold">
                 <span>총 금액</span>
-                <span className="text-primary">{formatPrice(selectedOrder.totalAmount)}</span>
+                <span className="text-primary">{formatPrice(order.total_amount)}</span>
               </div>
             </div>
           )}

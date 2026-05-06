@@ -46,10 +46,10 @@ export const useCustomerAuthStore = create<CustomerAuthStore>()(
           const data = response.data;
           const tableInfo: TableAuthInfo = {
             token: data.access_token,
-            tableId: data.table_id,
-            tableNumber: data.table_number,
-            storeId: data.store_id,
-            sessionId: data.session_id,
+            tableId: String(data.table_id),
+            tableNumber: String(data.table_number),
+            storeId: String(data.store_id),
+            sessionId: null, // Session is created on first order
           };
 
           set({
