@@ -112,6 +112,212 @@
 
 ---
 
+## Units Generation - Approval & Unit Selection
+**Timestamp**: 2026-05-06T00:30:00Z
+**User Input**: "ㅇㅋ 나는 unit2 를 진행할예정이야"
+**AI Response**: Units Generation 승인 완료. 사용자는 Unit 2 (Customer Frontend) 진행 예정. CONSTRUCTION PHASE를 Unit 2 기준으로 시작.
+**Context**: INCEPTION → CONSTRUCTION 전환, Unit 2 (Customer Frontend) 선택
+
+---
+
+## Functional Design - Unit 2 Complete
+**Timestamp**: 2026-05-06T00:32:00Z
+**User Input**: (Unit 2 선택에 따른 자동 진행)
+**AI Response**: Unit 2 (Customer Frontend) Functional Design 완료 - business-logic-model.md, business-rules.md, domain-entities.md, frontend-components.md 생성
+**Context**: CONSTRUCTION - Functional Design (Unit 2: Customer Frontend) 완료
+
+---
+
+## NFR Requirements - Unit 2 Complete
+**Timestamp**: 2026-05-06T00:34:00Z
+**User Input**: "ㅇㅇ 문서에 다 정의되어있어서 그대로 진행할게. 답변할거없지? 진행해줘"
+**AI Response**: NFR Requirements 생성 완료 (질문 없이 진행) - nfr-requirements.md (6개 카테고리, 22개 요구사항), tech-stack-decisions.md (10개 핵심 기술 + 라이브러리)
+**Context**: CONSTRUCTION - NFR Requirements (Unit 2: Customer Frontend) 완료
+
+---
+
+## NFR Requirements - Approval
+**Timestamp**: 2026-05-06T00:36:00Z
+**User Input**: "승인. 다음 단계 ㄱ"
+**AI Response**: NFR Requirements 승인 완료, NFR Design 단계로 진행
+**Context**: CONSTRUCTION - NFR Requirements → NFR Design 전환
+
+---
+
+## NFR Design - Unit 2 Complete
+**Timestamp**: 2026-05-06T00:38:00Z
+**User Input**: "승인. 다음 단계 ㄱ"
+**AI Response**: NFR Design 생성 완료 - 6개 패턴 영역 (성능, 가용성, 보안, 사용성, 프로젝트 구조, 테스트)
+**Context**: CONSTRUCTION - NFR Design (Unit 2: Customer Frontend) 완료
+
+---
+
+## NFR Design - Approval
+**Timestamp**: 2026-05-06T00:40:00Z
+**User Input**: "다음 짆앵해줘"
+**AI Response**: NFR Design 승인 완료, Infrastructure Design 단계로 진행
+**Context**: CONSTRUCTION - NFR Design → Infrastructure Design 전환
+
+---
+
+## Infrastructure Design - Unit 2 Complete
+**Timestamp**: 2026-05-06T00:42:00Z
+**User Input**: "다음 짆앵해줘"
+**AI Response**: Infrastructure Design 생성 완료 - S3 + CloudFront 정적 호스팅, 빌드/배포 파이프라인, 환경 설정, CORS, 비용 예측
+**Context**: CONSTRUCTION - Infrastructure Design (Unit 2: Customer Frontend) 완료
+
+---
+
+## Infrastructure Design - Approval
+**Timestamp**: 2026-05-06T00:44:00Z
+**User Input**: "다음 단계 진행해줘"
+**AI Response**: Infrastructure Design 승인 완료, Code Generation 단계 Part 1 (Planning) 시작
+**Context**: CONSTRUCTION - Infrastructure Design → Code Generation 전환
+
+---
+
+## Code Generation - Plan Approval
+**Timestamp**: 2026-05-06T00:48:00Z
+**User Input**: "진행해줘"
+**AI Response**: Code Generation Plan 승인 완료, Part 2 (Generation) 시작
+**Context**: CONSTRUCTION - Code Generation Part 1 → Part 2 전환
+
+---
+
+## Code Generation - Unit 2 Complete
+**Timestamp**: 2026-05-06T00:52:00Z
+**User Input**: "진행해줘"
+**AI Response**: Code Generation Part 2 완료 - 40+ 파일 생성 (프로젝트 스캐폴딩, Shared 인프라, UI 컴포넌트, Zustand Stores, React Query, 6개 페이지, Navigation, MSW Mock, 테스트, 설정, 문서)
+**Context**: CONSTRUCTION - Code Generation (Unit 2: Customer Frontend) 완료
+
+---
+
+## Code Generation - Approval
+**Timestamp**: 2026-05-06T00:54:00Z
+**User Input**: "그래 다음 단계로! 테스트해보자"
+**AI Response**: Code Generation 승인 완료, Build and Test 단계로 진행
+**Context**: CONSTRUCTION - Code Generation → Build and Test 전환
+
+---
+
+## Build and Test - Unit 2 Complete
+**Timestamp**: 2026-05-06T00:56:00Z
+**User Input**: "그래 다음 단계로! 테스트해보자"
+**AI Response**: Build and Test 지침 생성 완료. Node.js 미설치로 자동 실행 불가, 빌드/테스트 지침 문서 제공. vitest.config.ts, test-setup.ts 추가 생성.
+**Context**: CONSTRUCTION - Build and Test (Unit 2: Customer Frontend) 완료. Node.js 미설치 환경.
+
+---
+
+## CONSTRUCTION - Unit 3 (Admin Frontend) Start
+**Timestamp**: 2026-05-06T01:00:00Z
+**User Input**: "지금 이 프로젝트를 3명이 진행하고 있고, 3명이 각자 역할을 나눠 개발하기 위해 유닛을 나눴어. 나는 여기서 Unit3. Admin Frontend 구축을 맡았어. unit 3 를 진행해줘"
+**AI Response**: Unit 3 (Admin Frontend) Construction Phase 시작 - Functional Design 단계 진행
+**Context**: CONSTRUCTION - Functional Design (Unit 3: Admin Frontend) 시작
+
+---
+
+## CONSTRUCTION - Functional Design (Unit 3) - Questions Answered
+**Timestamp**: 2026-05-06T01:05:00Z
+**User Input**: "모두 답변했어. 다음 단계 진행해줘"
+**AI Response**: 8개 질문 답변 확인 완료. Q1:B(반응형 그리드), Q2:B(사이드 패널), Q3:A(마스터-디테일, 사용자 요청에 따라 가장 일반적인 방식 선택), Q4:B(좌측 사이드바), Q5:A(우측 상단), Q6:A(별도 페이지), Q7:A(@dnd-kit/core), Q8:A(지수 백오프). Functional Design 아티팩트 생성 완료.
+**Context**: CONSTRUCTION - Functional Design (Unit 3), 질문 답변 수집 및 설계 문서 생성
+
+---
+
+## CONSTRUCTION - Functional Design (Unit 3) - Approval
+**Timestamp**: 2026-05-06T01:10:00Z
+**User Input**: "다음 단계 진행해"
+**AI Response**: Functional Design 승인 완료, NFR Requirements 단계로 진행
+**Context**: CONSTRUCTION - Functional Design → NFR Requirements 전환 (Unit 3: Admin Frontend)
+
+---
+
+## CONSTRUCTION - NFR Requirements (Unit 3) - Questions Answered
+**Timestamp**: 2026-05-06T01:15:00Z
+**User Input**: "답변 완료했어. 다음 단계 진행해줘"
+**AI Response**: 6개 질문 답변 확인 완료. Q1:A(Tailwind CSS), Q2:A(Vitest+RTL 단위 테스트), Q3:A(Vite), Q4:A(기본 접근성), Q5:A(모던 브라우저), Q6:C(미들웨어 없음). NFR Requirements 아티팩트 생성 완료.
+**Context**: CONSTRUCTION - NFR Requirements (Unit 3), 질문 답변 수집 및 NFR 문서 생성
+
+---
+
+## CONSTRUCTION - NFR Requirements (Unit 3) - Approval
+**Timestamp**: 2026-05-06T01:20:00Z
+**User Input**: "다음 단계 진행해줘"
+**AI Response**: NFR Requirements 승인 완료, NFR Design 단계로 진행
+**Context**: CONSTRUCTION - NFR Requirements → NFR Design 전환 (Unit 3: Admin Frontend)
+
+---
+
+## CONSTRUCTION - NFR Design (Unit 3) - Complete
+**Timestamp**: 2026-05-06T01:25:00Z
+**User Input**: (NFR Requirements 승인 후 자동 진행)
+**AI Response**: NFR Design 아티팩트 생성 완료. 프론트엔드 유닛 특성상 추가 질문 없이 이전 단계 결정사항 기반으로 설계 패턴 및 논리적 컴포넌트 문서 생성.
+**Context**: CONSTRUCTION - NFR Design (Unit 3), 설계 패턴 및 논리적 컴포넌트 문서 생성
+
+---
+
+## CONSTRUCTION - NFR Design (Unit 3) - Approval
+**Timestamp**: 2026-05-06T01:30:00Z
+**User Input**: "다음단계 진행해줘"
+**AI Response**: NFR Design 승인 완료, Infrastructure Design 단계로 진행
+**Context**: CONSTRUCTION - NFR Design → Infrastructure Design 전환 (Unit 3: Admin Frontend)
+
+---
+
+## CONSTRUCTION - Infrastructure Design (Unit 3) - Complete
+**Timestamp**: 2026-05-06T01:35:00Z
+**User Input**: (NFR Design 승인 후 자동 진행)
+**AI Response**: Infrastructure Design 아티팩트 생성 완료. 프론트엔드 SPA 특성상 추가 질문 없이 S3+CloudFront 기반 정적 호스팅 아키텍처 설계.
+**Context**: CONSTRUCTION - Infrastructure Design (Unit 3), 인프라 설계 문서 생성
+
+---
+
+## CONSTRUCTION - Infrastructure Design (Unit 3) - Approval
+**Timestamp**: 2026-05-06T01:40:00Z
+**User Input**: "다음 단계 진행해줘"
+**AI Response**: Infrastructure Design 승인 완료, Code Generation 단계로 진행
+**Context**: CONSTRUCTION - Infrastructure Design → Code Generation 전환 (Unit 3: Admin Frontend)
+
+---
+
+## CONSTRUCTION - Code Generation (Unit 3) - Plan Approved
+**Timestamp**: 2026-05-06T01:45:00Z
+**User Input**: "계획 승인. 코드 생성 시작해줘"
+**AI Response**: Code Generation Plan 승인 완료, Part 2 (Generation) 시작. Step 1부터 순차 실행.
+**Context**: CONSTRUCTION - Code Generation Part 1 완료 → Part 2 시작 (Unit 3: Admin Frontend)
+
+---
+
+## CONSTRUCTION - Code Generation (Unit 3) - Complete
+**Timestamp**: 2026-05-06T02:00:00Z
+**User Input**: "계획 승인. 코드 생성 시작해줘"
+**AI Response**: Code Generation 8개 Step 모두 완료. 총 50+ 파일 생성 (프로젝트 설정, 공통 모듈, 인증, 대시보드, 메뉴 관리, 테이블 관리, 테스트, 배포).
+**Context**: CONSTRUCTION - Code Generation Part 2 완료 (Unit 3: Admin Frontend)
+
+---
+
+## CONSTRUCTION - Code Generation (Unit 3) - Approval
+**Timestamp**: 2026-05-06T02:05:00Z
+**User Input**: "확인은 나중에 할테니 일단 다음 진행해줘"
+**AI Response**: Code Generation 승인 완료, Build & Test 단계로 진행
+**Context**: CONSTRUCTION - Code Generation → Build & Test 전환 (Unit 3: Admin Frontend)
+
+---
+
+## CONSTRUCTION - Build and Test (Unit 3) - Complete
+**Timestamp**: 2026-05-06T02:10:00Z
+**Build Status**: 설정 완료 (코드 생성 완료, npm install 후 빌드 가능)
+**Test Status**: 단위 테스트 작성 완료, 통합 테스트 시나리오 정의 완료
+**Files Generated**:
+- build-instructions.md
+- unit-test-instructions.md
+- integration-test-instructions.md
+- performance-test-instructions.md
+- build-and-test-summary.md
+**Context**: CONSTRUCTION - Build and Test 완료 (Unit 3: Admin Frontend)
+
+---
+
 ## CONSTRUCTION - Unit 1 (Backend) 시작 요청
 **Timestamp**: 2026-05-06T01:00:00Z
 **User Input**: "나 Unit 1 (Backend) 맡아서 개발해야돼 . 어떻게 하면 될까 ?"
