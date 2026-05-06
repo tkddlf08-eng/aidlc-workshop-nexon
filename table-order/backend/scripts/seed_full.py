@@ -24,7 +24,7 @@ CATEGORIES = [
 
 MENUS = [
     # 추천 메뉴 (cat 1)
-    {"cat": 1, "name": "한우 불고기 정식", "price": 18000, "desc": "국내산 한우로 만든 달콤한 불고기와 계절 나물, 된장찌개가 함께 나오는 시그니처 정식", "img": "https://images.unsplash.com/photo-1583224994076-0a3a3b8efa4b?w=400&h=300&fit=crop", "order": 1},
+    {"cat": 1, "name": "한우 불고기 정식", "price": 18000, "desc": "국내산 한우로 만든 달콤한 불고기와 계절 나물, 된장찌개가 함께 나오는 시그니처 정식", "img": "https://images.unsplash.com/photo-1580651214613-f4692d6d138f?w=400&h=300&fit=crop", "order": 1},
     {"cat": 1, "name": "돼지갈비 구이", "price": 16000, "desc": "24시간 양념에 재운 돼지갈비를 숯불에 구워 육즙이 살아있는 인기 메뉴", "img": "https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&h=300&fit=crop", "order": 2},
     {"cat": 1, "name": "해물 순두부찌개", "price": 11000, "desc": "신선한 해물과 부드러운 순두부가 어우러진 얼큰한 찌개. 밥 한 공기 뚝딱!", "img": "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=400&h=300&fit=crop", "order": 3},
     # 정식/백반 (cat 2)
@@ -33,15 +33,15 @@ MENUS = [
     {"cat": 2, "name": "두부 김치 정식", "price": 10000, "desc": "보글보글 끓인 김치와 고소한 두부, 따뜻한 밥이 어울리는 가성비 정식", "img": "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=400&h=300&fit=crop", "order": 3},
     {"cat": 2, "name": "비빔밥 정식", "price": 11000, "desc": "형형색색 나물과 고추장, 계란 프라이가 올라간 전통 비빔밥", "img": "https://images.unsplash.com/photo-1553163147-622ab57be1c7?w=400&h=300&fit=crop", "order": 4},
     # 찌개/탕 (cat 3)
-    {"cat": 3, "name": "김치찌개", "price": 9000, "desc": "묵은지와 돼지고기로 깊은 맛을 낸 얼큰한 김치찌개", "img": "https://images.unsplash.com/photo-1583187855999-3e5e4f3a5b6c?w=400&h=300&fit=crop", "order": 1},
+    {"cat": 3, "name": "김치찌개", "price": 9000, "desc": "묵은지와 돼지고기로 깊은 맛을 낸 얼큰한 김치찌개", "img": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop", "order": 1},
     {"cat": 3, "name": "된장찌개", "price": 9000, "desc": "직접 담근 된장으로 끓인 구수한 된장찌개. 두부와 호박이 듬뿍", "img": "https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=300&fit=crop", "order": 2},
     {"cat": 3, "name": "부대찌개", "price": 12000, "desc": "햄, 소시지, 라면사리가 들어간 푸짐한 부대찌개 (2인 기준)", "img": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop", "order": 3},
-    {"cat": 3, "name": "갈비탕", "price": 14000, "desc": "소갈비를 오랜 시간 고아 만든 진한 국물의 갈비탕", "img": "https://images.unsplash.com/photo-1569058242567-93de6f36f8eb?w=400&h=300&fit=crop", "order": 4},
-    {"cat": 3, "name": "삼계탕", "price": 15000, "desc": "영계에 찹쌀, 인삼, 대추를 넣고 푹 고아낸 보양식", "img": "https://images.unsplash.com/photo-1583224994076-0a3a3b8efa4b?w=400&h=300&fit=crop", "order": 5},
+    {"cat": 3, "name": "갈비탕", "price": 14000, "desc": "소갈비를 오랜 시간 고아 만든 진한 국물의 갈비탕", "img": "https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=300&fit=crop", "order": 4},
+    {"cat": 3, "name": "삼계탕", "price": 15000, "desc": "영계에 찹쌀, 인삼, 대추를 넣고 푹 고아낸 보양식", "img": "https://images.unsplash.com/photo-1580651214613-f4692d6d138f?w=400&h=300&fit=crop", "order": 5},
     # 구이/볶음 (cat 4)
     {"cat": 4, "name": "삼겹살 구이", "price": 15000, "desc": "두툼하게 썬 국내산 삼겹살을 직화로 구워 드립니다 (200g)", "img": "https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&h=300&fit=crop", "order": 1},
     {"cat": 4, "name": "오징어볶음", "price": 13000, "desc": "싱싱한 오징어를 매콤한 양념에 볶아낸 밥도둑 메뉴", "img": "https://images.unsplash.com/photo-1625398407796-82650a8c135f?w=400&h=300&fit=crop", "order": 2},
-    {"cat": 4, "name": "닭갈비", "price": 14000, "desc": "춘천식 매콤 닭갈비. 떡, 고구마, 양배추와 함께 볶아 드립니다", "img": "https://images.unsplash.com/photo-1632558610168-5c7e2b4e3c3a?w=400&h=300&fit=crop", "order": 3},
+    {"cat": 4, "name": "닭갈비", "price": 14000, "desc": "춘천식 매콤 닭갈비. 떡, 고구마, 양배추와 함께 볶아 드립니다", "img": "https://images.unsplash.com/photo-1635363638580-c2809d049eee?w=400&h=300&fit=crop", "order": 3},
     # 면/밥 (cat 5)
     {"cat": 5, "name": "잔치국수", "price": 7000, "desc": "멸치 육수에 소면을 말아낸 시원한 잔치국수", "img": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop", "order": 1},
     {"cat": 5, "name": "볶음밥", "price": 8000, "desc": "김치와 계란이 들어간 고소한 김치볶음밥", "img": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop", "order": 2},
@@ -55,7 +55,7 @@ MENUS = [
     # 음료/주류 (cat 7)
     {"cat": 7, "name": "콜라", "price": 2000, "desc": "시원한 코카콜라 (355ml)", "img": "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400&h=300&fit=crop", "order": 1},
     {"cat": 7, "name": "사이다", "price": 2000, "desc": "톡 쏘는 칠성사이다 (355ml)", "img": "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&h=300&fit=crop", "order": 2},
-    {"cat": 7, "name": "소주", "price": 5000, "desc": "참이슬 후레쉬 (360ml)", "img": "https://images.unsplash.com/photo-1574710704606-3ecf6977a9c1?w=400&h=300&fit=crop", "order": 3},
+    {"cat": 7, "name": "소주", "price": 5000, "desc": "참이슬 후레쉬 (360ml)", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&h=300&fit=crop", "order": 3},
     {"cat": 7, "name": "맥주", "price": 5000, "desc": "시원한 생맥주 (500ml)", "img": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=300&fit=crop", "order": 4},
     {"cat": 7, "name": "막걸리", "price": 6000, "desc": "전통 방식으로 빚은 생막걸리 (750ml)", "img": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&h=300&fit=crop", "order": 5},
     {"cat": 7, "name": "매실차", "price": 3000, "desc": "달콤새콤한 매실차 (따뜻하게/차갑게 선택 가능)", "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop", "order": 6},
