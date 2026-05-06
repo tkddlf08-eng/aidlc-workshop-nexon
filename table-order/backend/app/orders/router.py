@@ -48,6 +48,83 @@ async def get_orders(
     )
 
 
+@router.get("/stream")
+async def order_stream(
+    token: str = Query(...),
+    db: AsyncSession = Depends(get_db),
+):
+    """SSE stream for real-time order updates (admin)."""
+    from uuid import uuid4
+
+    from sse_starlette.sse import EventSourceResponse
+
+    from app.core.security import decode_access_token
+    from app.orders.sse import sse_manager
+
+    # Validate token
+    payload = decode_access_token(token)
+    if not payload or payload.get("role") != "admin":
+        from fastapi.responses import JSONResponse
+        return JSONResponse(status_code=401, content={"message": "Unauthorized"})
+
+    client_id = str(uuid4())
+
+    async def event_generator():
+        async for event in sse_manager.subscribe_admin(client_id):
+            yield event
+
+    return EventSourceResponse(event_generator())
+
+
+@router.get("/history", response_model=dict)
+async def get_order_history(
+    table_id: int = Query(...),
+    date_from: datetime | None = Query(None),
+    date_to: datetime | None = Query(None),
+    pagination: PaginationParams = Depends(),
+    user: UserInfo = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """과거 주문 내역 조회 (관리자)."""
+    from app.orders.repository import OrderRepository
+    from app.orders.schemas import OrderItemResponse
+
+    repo = OrderRepository(db)
+    orders, total = await repo.get_history(
+        table_id, date_from, date_to, pagination.limit, pagination.offset
+    )
+
+    items = []
+    for order in orders:
+        order_items = await repo.get_items(order.id)
+        items.append(
+            OrderResponse(
+                id=order.id,
+                order_number=order.order_number,
+                table_id=order.table_id,
+                session_id=order.session_id,
+                total_amount=order.total_amount,
+                status=order.status,
+                items=[OrderItemResponse.model_validate(oi) for oi in order_items],
+                created_at=order.created_at,
+                updated_at=order.updated_at,
+            )
+        )
+
+    total_pages = (total + pagination.limit - 1) // pagination.limit
+    return {
+        "items": items,
+        "pagination": {
+            "page": pagination.page,
+            "limit": pagination.limit,
+            "total_items": total,
+            "total_pages": total_pages,
+            "has_next": pagination.page < total_pages,
+            "has_prev": pagination.page > 1,
+        },
+    }
+
+
 @router.get("/{order_id}", response_model=OrderResponse)
 async def get_order(
     order_id: int,
@@ -100,80 +177,3 @@ async def delete_order(
     service = OrderService(db)
     await service.delete_order(order_id)
     return {"message": "주문이 삭제되었습니다"}
-
-
-@router.get("/history", response_model=dict)
-async def get_order_history(
-    table_id: int = Query(...),
-    date_from: datetime | None = Query(None),
-    date_to: datetime | None = Query(None),
-    pagination: PaginationParams = Depends(),
-    user: UserInfo = Depends(get_current_admin),
-    db: AsyncSession = Depends(get_db),
-):
-    """과거 주문 내역 조회 (관리자)."""
-    from app.orders.repository import OrderRepository
-    from app.orders.schemas import OrderItemResponse
-
-    repo = OrderRepository(db)
-    orders, total = await repo.get_history(
-        table_id, date_from, date_to, pagination.limit, pagination.offset
-    )
-
-    items = []
-    for order in orders:
-        order_items = await repo.get_items(order.id)
-        items.append(
-            OrderResponse(
-                id=order.id,
-                order_number=order.order_number,
-                table_id=order.table_id,
-                session_id=order.session_id,
-                total_amount=order.total_amount,
-                status=order.status,
-                items=[OrderItemResponse.model_validate(oi) for oi in order_items],
-                created_at=order.created_at,
-                updated_at=order.updated_at,
-            )
-        )
-
-    total_pages = (total + pagination.limit - 1) // pagination.limit
-    return {
-        "items": items,
-        "pagination": {
-            "page": pagination.page,
-            "limit": pagination.limit,
-            "total_items": total,
-            "total_pages": total_pages,
-            "has_next": pagination.page < total_pages,
-            "has_prev": pagination.page > 1,
-        },
-    }
-
-
-@router.get("/stream")
-async def order_stream(
-    token: str = Query(...),
-    db: AsyncSession = Depends(get_db),
-):
-    """SSE stream for real-time order updates (admin)."""
-    from uuid import uuid4
-
-    from sse_starlette.sse import EventSourceResponse
-
-    from app.core.security import decode_access_token
-    from app.orders.sse import sse_manager
-
-    # Validate token
-    payload = decode_access_token(token)
-    if not payload or payload.get("role") != "admin":
-        from fastapi.responses import JSONResponse
-        return JSONResponse(status_code=401, content={"message": "Unauthorized"})
-
-    client_id = str(uuid4())
-
-    async def event_generator():
-        async for event in sse_manager.subscribe_admin(client_id):
-            yield event
-
-    return EventSourceResponse(event_generator())
